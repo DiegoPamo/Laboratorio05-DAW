@@ -6,7 +6,7 @@ const course = (props) => {
     const suma = exercis.reduce((cont, {exercises}) => cont+exercises,0)
 return (
     <div>
-        <Header header={props.course.name}/>
+        <Header header={props.course.name}/> 
         <Content content={props.course.parts}/>
         <p><b>Suma de los Exercises: {suma}</b></p>
     </div>
