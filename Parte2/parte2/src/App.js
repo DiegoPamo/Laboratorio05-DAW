@@ -6,6 +6,7 @@ const App = () => {
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [ filter, setFilter ] = useState('')
 
   const eventRename = (event) => {
     setNewName(event.target.value)
@@ -14,38 +15,33 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const filterSearch = (event) => {
+    setFilter(event.target.value)
+  }
+
 
   const eventClick = (event) => {
-
     event.preventDefault()
-    const person = {name: newName, number:newNumber}
-
-    var cont=1 
-
+    
     for (var i = 0; i < persons.length; i++) {
-      if(persons[i].name === person.name){
-        cont++
-      } 
-    }
-    var NewName = person.name
-    if(cont === 1){
-      setPersons([...persons, person])
-      window.alert('El nombre '+NewName+' fue agregado correctamente');
-      setNewName("")
-      setNewNumber("")
-    } else {
-      window.alert('El nombre ' +NewName+' ya existe en su lista');
-      setNewName("")
-      setNewNumber("")
-
-    }
-
+      if(newName === persons[i].name || newNumber === persons[i].number){
+        window.alert(newName+' ya existe en su lista');
+        setPersons([...persons]) 
+      }else {
+        const person = {name: newName, number:newNumber}
+        setPersons([...persons, person] )
+        setNewName("")
+        setNewNumber("")
+      }    
   }
+}
 
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>filter shown with: <input type="text" onChange={filterSearch}/></div>
+      <h3>Add a new</h3>
       <form onSubmit={eventClick}>
         <div>
           name: <input type="text" value={newName} onChange={eventRename} />
@@ -58,12 +54,10 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-          {persons.map((person,index) => {
-            return(
-              <li key={index}>{person.name} whit number is {person.number}</li>
-              )})}
+          {persons.filter((nombre) => 
+            nombre.name.includes(filter)).map((person) => 
+              <li key={person.name}>{person.name} whit number: {person.number}</li>)}
     </div>
   )
 }
-
 export default App;
