@@ -11,12 +11,27 @@ const App = () => {
   }
 
   const eventClick = (event) => {
-    
+
     event.preventDefault()
     const person = {name: newName}
-    setPersons(
-      [...persons, person]
-      )
+
+    var cont=1 
+
+    for (var i = 0; i < persons.length; i++) {
+      if(persons[i].name === person.name){
+        cont++
+      } 
+    }
+    var NewName = person.name
+    if(cont === 1){
+      setPersons([...persons, person])
+      window.alert('El nombre '+NewName+' fue agregado correctamente');
+      setNewName("")
+    } else {
+      window.alert('El nombre ' +NewName+' ya existe en su lista');
+      setNewName("")
+    }
+
   }
 
 
